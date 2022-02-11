@@ -7,6 +7,109 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="30*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid x:Name="gridView"
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectionMode="Single" 
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding}"
+                  IsReadOnly="False" 
+                  CurrentCellChanged="GVCurrentCellChanged"
+                  CellEditEnding="GVCellEditEnding"
+                  >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="id" 
+                                    Binding="{Binding id}" 
+                                    Header="Id" 
+                                    IsReadOnly="True"/>
+                
+                <DataGridTextColumn x:Name="ClientSurname" 
+                                    Binding="{Binding Surname}" 
+                                    Header="Фамилия"/>
+                
+                <DataGridTextColumn x:Name="ClientName" 
+                                    Binding="{Binding Name}" 
+                                    Header="Имя"/>
+
+                <DataGridTextColumn x:Name="ClientLastname" 
+                                    Binding="{Binding Lastname}" 
+                                    Header="Отчество"/>
+                
+                <DataGridTextColumn x:Name="Phone" 
+                                    Binding="{Binding Phone}" 
+                                    Header="Phone"/>
+                
+                <DataGridTextColumn x:Name="Email" 
+                                    Binding="{Binding Email}" 
+                                    Header="Email"/>
+
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить" Click="MenuItemAddClick"/>
+                    <MenuItem Header="Удалить" Click="MenuItemDeleteClick"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <DataGrid x:Name="gridView1"
+                  Grid.Row="1"
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectionMode="Single" 
+                  AutoGenerateColumns="False" 
+                  ItemsSource="{Binding}"
+                  IsReadOnly="False" 
+                  CurrentCellChanged="GVCurrentCellChanged"
+                  CellEditEnding="GVCellEditEnding"
+                  >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="id1" 
+                                    Binding="{Binding id1}" 
+                                    Header="Id" 
+                                    IsReadOnly="True"/>
+
+                <DataGridTextColumn x:Name="workerName1" 
+                                    Binding="{Binding workerName1}" 
+                                    Header="Имя Сотрудника"/>
+
+                <DataGridTextColumn x:Name="idBoss1" 
+                                    Binding="{Binding idBoss1}" 
+                                    Header="id начальника"/>
+
+                <DataGridTextColumn x:Name="idDescription1" 
+                                    Binding="{Binding idDescription1}" 
+                                    Header="id Замечания"/>
+
+
+            </DataGrid.Columns>
+            <!--<DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить" Click="MenuItemAddClick"/>
+                    <MenuItem Header="Удалить" Click="MenuItemDeleteClick"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>-->
+        </DataGrid>
+        <TextBlock x:Name="tbLOG" Grid.Column="1" HorizontalAlignment="Left" 
+                   Margin="10,10,0,0" TextWrapping="Wrap"
+                   Height="190"  Width="218"
+                   Text="TextBlock" VerticalAlignment="Top"
+                   />
+
+        <!--<DataGrid HorizontalAlignment="Left" Height="190" 
+                  Margin="10,10,0,0" VerticalAlignment="Top" 
+                  Width="534"/>
+        <DataGrid HorizontalAlignment="Left" Height="189" 
+                  Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="534"/>-->
+
     </Grid>
 </Window>
