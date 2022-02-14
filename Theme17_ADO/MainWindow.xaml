@@ -6,6 +6,23 @@
         xmlns:local="clr-namespace:Theme17_ADO"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        
+        <DataTemplate x:Key="PurchaseItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+            </Grid>
+        </DataTemplate>
+        <!--<local:Theme17_AccessDataSet1 x:Key="theme17_AccessDataSet1"/>
+        <CollectionViewSource x:Key="purchasesViewSource" Source="{Binding Purchases, Source={StaticResource theme17_AccessDataSet1}}"/>-->
+    </Window.Resources>
+    
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*"/>
@@ -32,11 +49,11 @@
                                     Binding="{Binding id}" 
                                     Header="Id" 
                                     IsReadOnly="True"/>
-                
+
                 <DataGridTextColumn x:Name="ClientSurname" 
                                     Binding="{Binding Surname}" 
                                     Header="Фамилия"/>
-                
+
                 <DataGridTextColumn x:Name="ClientName" 
                                     Binding="{Binding Name}" 
                                     Header="Имя"/>
@@ -44,11 +61,11 @@
                 <DataGridTextColumn x:Name="ClientLastname" 
                                     Binding="{Binding Lastname}" 
                                     Header="Отчество"/>
-                
+
                 <DataGridTextColumn x:Name="Phone" 
                                     Binding="{Binding Phone}" 
                                     Header="Phone"/>
-                
+
                 <DataGridTextColumn x:Name="Email" 
                                     Binding="{Binding Email}" 
                                     Header="Email"/>
@@ -61,55 +78,38 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <DataGrid x:Name="gridView1"
-                  Grid.Row="1"
-                  IsSynchronizedWithCurrentItem="True"
-                  SelectionMode="Single" 
-                  AutoGenerateColumns="False" 
-                  ItemsSource="{Binding}"
-                  IsReadOnly="False" 
-                  CurrentCellChanged="GVCurrentCellChanged"
-                  CellEditEnding="GVCellEditEnding"
-                  >
-
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="id1" 
-                                    Binding="{Binding id1}" 
-                                    Header="Id" 
-                                    IsReadOnly="True"/>
-
-                <DataGridTextColumn x:Name="workerName1" 
-                                    Binding="{Binding workerName1}" 
-                                    Header="Имя Сотрудника"/>
-
-                <DataGridTextColumn x:Name="idBoss1" 
-                                    Binding="{Binding idBoss1}" 
-                                    Header="id начальника"/>
-
-                <DataGridTextColumn x:Name="idDescription1" 
-                                    Binding="{Binding idDescription1}" 
-                                    Header="id Замечания"/>
-
-
-            </DataGrid.Columns>
-            <!--<DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Добавить" Click="MenuItemAddClick"/>
-                    <MenuItem Header="Удалить" Click="MenuItemDeleteClick"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>-->
-        </DataGrid>
+       
         <TextBlock x:Name="tbLOG" Grid.Column="1" HorizontalAlignment="Left" 
                    Margin="10,10,0,0" TextWrapping="Wrap"
                    Height="190"  Width="218"
-                   Text="TextBlock" VerticalAlignment="Top"
+                   Text="{Binding}" VerticalAlignment="Top"
                    />
 
-        <!--<DataGrid HorizontalAlignment="Left" Height="190" 
-                  Margin="10,10,0,0" VerticalAlignment="Top" 
-                  Width="534"/>
-        <DataGrid HorizontalAlignment="Left" Height="189" 
-                  Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="534"/>-->
-
+        <DataGrid x:Name="purchasesDG" AutoGenerateColumns="False" 
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectionMode="Single" 
+                  EnableRowVirtualization="True" 
+                  ItemsSource="{Binding Source=Purchases}" 
+                 
+                  Margin="10,10,10,10" Grid.Row="1" 
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  CurrentCellChanged="GVCurrentCellChanged"
+                  CellEditEnding="GVCellEditEnding">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="iDColumn" 
+                                    Binding="{Binding ElementName=ID}" 
+                                    Header="ID"/>
+                <DataGridTextColumn x:Name="emailColumn" 
+                                    Binding="{Binding Email}" 
+                                    Header="Email"/>
+                <DataGridTextColumn x:Name="productIDColumn" 
+                                    Binding="{Binding ProductID}" 
+                                    Header="Product ID"/>
+                <DataGridTextColumn x:Name="productNameColumn" 
+                                    Binding="{Binding ProductName}" 
+                                    Header="Product Name"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
     </Grid>
 </Window>

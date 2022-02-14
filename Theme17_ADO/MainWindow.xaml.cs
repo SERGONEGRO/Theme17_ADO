@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace Theme17_ADO
 {
@@ -33,12 +34,27 @@ namespace Theme17_ADO
         OleDbDataAdapter daOleDb;
         DataTable dtOleDb;
         DataRowView rowOleDb;
+        DataSet myDataSet;
 
 
         //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Theme17_ADO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
         //Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\User\source\repos\Theme17_ADO\Theme17_ADO\Theme17_Access.accdb
 
-        public MainWindow() { InitializeComponent(); Preparing(); }
+        public MainWindow() { InitializeComponent(); Preparing(); OnInit(); }
+
+        private void OnInit()
+        {
+            string appDataPath = "C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO";
+            string accdbFile = Path.Combine(appDataPath, "Theme17_Access.accdb");
+            string connString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}", accdbFile);
+            OleDbConnection conn = new OleDbConnection(connString);
+            OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM Purchases;", conn);
+
+            myDataSet = new DataSet();
+            adapter.Fill(myDataSet, "Purchases");
+            purchasesDG.DataContext = myDataSet.DefaultViewManager;
+        }
+
 
 
         private void Preparing()
@@ -55,12 +71,6 @@ namespace Theme17_ADO
             dtSQL = new DataTable();
             daSQL = new SqlDataAdapter();
             tbLOG.Text += "Соединение с базой SQL успешно";
-
-            //var connectionStringBuilder1 = new OleDbConnectionStringBuilder
-            //{
-            //    DataSource = @"C:\Users\User\source\repos\Theme17_ADO\Theme17_ADO\Theme17_Access.accdb"
-            //};
-
 
             #endregion
 
@@ -121,6 +131,7 @@ namespace Theme17_ADO
             daSQL.Fill(dtSQL);
 
             gridView.DataContext = dtSQL.DefaultView;
+            
 
         }
 
@@ -183,5 +194,16 @@ namespace Theme17_ADO
         {
             //new AllView().ShowDialog();
         }
+
+        //private void Window_Loaded(object sender, RoutedEventArgs e)
+        //{
+
+        //    Theme17_AccessDataSet1 theme17_AccessDataSet1 = (Theme17_AccessDataSet1)FindResource("theme17_AccessDataSet1");
+        //    // Загрузить данные в таблицу Purchases. Можно изменить этот код как требуется.
+        //    Theme17_ADO.Theme17_AccessDataSet1TableAdapters.PurchasesTableAdapter theme17_AccessDataSet1PurchasesTableAdapter = new Theme17_ADO.Theme17_AccessDataSet1TableAdapters.PurchasesTableAdapter();
+        //    theme17_AccessDataSet1PurchasesTableAdapter.Fill(theme17_AccessDataSet1.Purchases);
+        //    System.Windows.Data.CollectionViewSource purchasesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("purchasesViewSource")));
+        //    purchasesViewSource.View.MoveCurrentToFirst();
+        //}
     }
 }
