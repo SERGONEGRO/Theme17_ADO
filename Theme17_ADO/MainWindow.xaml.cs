@@ -30,32 +30,19 @@ namespace Theme17_ADO
         DataRowView rowSQL;
 
 
-        OleDbConnection conOleDb;
-        OleDbDataAdapter daOleDb;
+        //OleDbConnection conOleDb;
+        //OleDbDataAdapter daOleDb;
         DataTable dtOleDb;
         DataRowView rowOleDb;
         DataSet myDataSet;
+        Theme17_AccessDataSet2TableAdapters.PurchasesTableAdapter taAcc;
+        Theme17_AccessDataSet2 dsAcc;
 
 
         //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Theme17_ADO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
         //Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\User\source\repos\Theme17_ADO\Theme17_ADO\Theme17_Access.accdb
 
-        public MainWindow() { InitializeComponent(); Preparing(); OnInit(); }
-
-        private void OnInit()
-        {
-            string appDataPath = "C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO";
-            string accdbFile = Path.Combine(appDataPath, "Theme17_Access.accdb");
-            string connString = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}", accdbFile);
-            OleDbConnection conn = new OleDbConnection(connString);
-            OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT * FROM Purchases;", conn);
-
-            myDataSet = new DataSet();
-            adapter.Fill(myDataSet, "Purchases");
-            purchasesDG.DataContext = myDataSet.DefaultViewManager;
-        }
-
-
+        public MainWindow() { InitializeComponent(); Preparing(); }
 
         private void Preparing()
         {
@@ -96,7 +83,6 @@ namespace Theme17_ADO
             daSQL.InsertCommand.Parameters.Add("@Phone", SqlDbType.NVarChar, 15, "Phone");
             daSQL.InsertCommand.Parameters.Add("@Email", SqlDbType.NVarChar, 50, "Email");
 
-
             #endregion
 
             #region update
@@ -131,7 +117,8 @@ namespace Theme17_ADO
             daSQL.Fill(dtSQL);
 
             gridView.DataContext = dtSQL.DefaultView;
-            
+
+            /***Access***/
 
         }
 
@@ -177,7 +164,7 @@ namespace Theme17_ADO
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void MenuItemAddClick(object sender, RoutedEventArgs e)
-            {
+        {
             DataRow r = dtSQL.NewRow();
             AddClientWindow add = new AddClientWindow(r);
             add.ShowDialog();
@@ -192,18 +179,88 @@ namespace Theme17_ADO
 
         private void AllViewShow(object sender, RoutedEventArgs e)
         {
+            
             //new AllView().ShowDialog();
         }
 
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            dsAcc = (Theme17_AccessDataSet2)FindResource("theme17_AccessDataSet2");
+            // Загрузить данные в таблицу Purchases. Можно изменить этот код как требуется.
+            taAcc = new Theme17_AccessDataSet2TableAdapters.PurchasesTableAdapter();
+            taAcc.Fill(dsAcc.Purchases);
+            CollectionViewSource purchasesViewSource = (CollectionViewSource)FindResource("purchasesViewSource");
+            purchasesViewSource.View.MoveCurrentToFirst();
+        }
 
-        //    Theme17_AccessDataSet1 theme17_AccessDataSet1 = (Theme17_AccessDataSet1)FindResource("theme17_AccessDataSet1");
-        //    // Загрузить данные в таблицу Purchases. Можно изменить этот код как требуется.
-        //    Theme17_ADO.Theme17_AccessDataSet1TableAdapters.PurchasesTableAdapter theme17_AccessDataSet1PurchasesTableAdapter = new Theme17_ADO.Theme17_AccessDataSet1TableAdapters.PurchasesTableAdapter();
-        //    theme17_AccessDataSet1PurchasesTableAdapter.Fill(theme17_AccessDataSet1.Purchases);
-        //    System.Windows.Data.CollectionViewSource purchasesViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("purchasesViewSource")));
-        //    purchasesViewSource.View.MoveCurrentToFirst();
-        //}
+
+        /// <summary>
+        /// Удаление записи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemDeleteClickAcc(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                rowOleDb = (DataRowView)purchasesDataGrid.SelectedItem;
+                rowOleDb.Row.Delete();
+                taAcc.Update(dsAcc);
+            }
+            catch
+            {
+                MessageBox.Show("Update Failed");
+            }
+        }
+
+        /// <summary>
+        /// Добавление записи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemAddClickAcc(object sender, RoutedEventArgs e)
+        {
+            DataRow r = dtSQL.NewRow();
+            AddClientWindow add = new AddClientWindow(r);
+            add.ShowDialog();
+
+
+            if (add.DialogResult.Value)
+            {
+                dtSQL.Rows.Add(r);
+                daSQL.Update(dtSQL);
+            }
+        }
+
+        /// <summary>
+        /// Начало редактирования 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GVCellEditEndingAcc(object sender, DataGridCellEditEndingEventArgs e)
+        {
+
+            rowOleDb = (DataRowView)gridView.SelectedItem;
+            rowOleDb.BeginEdit();
+        }
+
+        /// <summary>
+        /// Редактирование записи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GVCurrentCellChangedAcc(object sender, EventArgs e)
+        {
+            try
+            {
+                if (rowOleDb == null) return;
+                rowOleDb.EndEdit();
+                taAcc.Update(dsAcc);
+            }
+            catch
+            {
+                MessageBox.Show("Update Failed");
+            }
+        }
     }
 }

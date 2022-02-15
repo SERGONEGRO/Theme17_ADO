@@ -5,25 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Theme17_ADO"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Window.Resources>
-        
-        <DataTemplate x:Key="PurchaseItemTemplate">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250" />
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                
-            </Grid>
-        </DataTemplate>
-        <!--<local:Theme17_AccessDataSet1 x:Key="theme17_AccessDataSet1"/>
-        <CollectionViewSource x:Key="purchasesViewSource" Source="{Binding Purchases, Source={StaticResource theme17_AccessDataSet1}}"/>-->
+        <local:Theme17_AccessDataSet2 x:Key="theme17_AccessDataSet2"/>
+        <CollectionViewSource x:Key="purchasesViewSource" Source="{Binding Purchases, Source={StaticResource theme17_AccessDataSet2}}"/>
     </Window.Resources>
-    
-    
-    <Grid>
+
+
+    <Grid DataContext="{StaticResource purchasesViewSource}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*"/>
             <ColumnDefinition Width="30*"/>
@@ -78,37 +67,35 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-       
+
         <TextBlock x:Name="tbLOG" Grid.Column="1" HorizontalAlignment="Left" 
                    Margin="10,10,0,0" TextWrapping="Wrap"
                    Height="190"  Width="218"
                    Text="{Binding}" VerticalAlignment="Top"
                    />
-
-        <DataGrid x:Name="purchasesDG" AutoGenerateColumns="False" 
+        <DataGrid x:Name="purchasesDataGrid" 
                   IsSynchronizedWithCurrentItem="True"
-                  SelectionMode="Single" 
+                  SelectionMode="Single"
+                  AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
-                  ItemsSource="{Binding Source=Purchases}" 
-                 
-                  Margin="10,10,10,10" Grid.Row="1" 
-                  RowDetailsVisibilityMode="VisibleWhenSelected"
-                  CurrentCellChanged="GVCurrentCellChanged"
-                  CellEditEnding="GVCellEditEnding">
+                  ItemsSource="{Binding}" Margin="0,220,0,10"
+                  IsReadOnly="False"
+                  RowDetailsVisibilityMode="VisibleWhenSelected" 
+                  Grid.RowSpan="2"
+                  CurrentCellChanged="GVCurrentCellChangedAcc"
+                  CellEditEnding="GVCellEditEndingAcc">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="iDColumn" 
-                                    Binding="{Binding ElementName=ID}" 
-                                    Header="ID"/>
-                <DataGridTextColumn x:Name="emailColumn" 
-                                    Binding="{Binding Email}" 
-                                    Header="Email"/>
-                <DataGridTextColumn x:Name="productIDColumn" 
-                                    Binding="{Binding ProductID}" 
-                                    Header="Product ID"/>
-                <DataGridTextColumn x:Name="productNameColumn" 
-                                    Binding="{Binding ProductName}" 
-                                    Header="Product Name"/>
+                <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID"/>
+                <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email}" Header="Email"/>
+                <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID"/>
+                <DataGridTextColumn x:Name="productNameColumn" Binding="{Binding ProductName}" Header="Product Name"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить" Click="MenuItemAddClickAcc"/>
+                    <MenuItem Header="Удалить" Click="MenuItemDeleteClickAcc"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         
     </Grid>

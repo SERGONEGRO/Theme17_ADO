@@ -101,15 +101,10 @@
     <Compile Include="AddClientWindow.xaml.cs">
       <DependentUpon>AddClientWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Theme17_AccessDataSet.Designer.cs">
+    <Compile Include="Theme17_AccessDataSet2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Theme17_AccessDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Theme17_AccessDataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Theme17_AccessDataSet1.xsd</DependentUpon>
+      <DependentUpon>Theme17_AccessDataSet2.xsd</DependentUpon>
     </Compile>
     <Page Include="AddClientWindow.xaml">
       <SubType>Designer</SubType>
@@ -151,27 +146,16 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Theme17_AccessDataSet.xsc">
-      <DependentUpon>Theme17_AccessDataSet.xsd</DependentUpon>
+    <None Include="Theme17_AccessDataSet2.xsc">
+      <DependentUpon>Theme17_AccessDataSet2.xsd</DependentUpon>
     </None>
-    <None Include="Theme17_AccessDataSet.xsd">
+    <None Include="Theme17_AccessDataSet2.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Theme17_AccessDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>Theme17_AccessDataSet2.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Theme17_AccessDataSet.xss">
-      <DependentUpon>Theme17_AccessDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Theme17_AccessDataSet1.xsc">
-      <DependentUpon>Theme17_AccessDataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="Theme17_AccessDataSet1.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Theme17_AccessDataSet1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Theme17_AccessDataSet1.xss">
-      <DependentUpon>Theme17_AccessDataSet1.xsd</DependentUpon>
+    <None Include="Theme17_AccessDataSet2.xss">
+      <DependentUpon>Theme17_AccessDataSet2.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SQLCreateDatandTables.sql" />
-    <Content Include="Theme17_Access.accdb">
+    <Content Include="Theme17_Access.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
