@@ -240,8 +240,9 @@ namespace Theme17_ADO
         private void GVCellEditEndingAcc(object sender, DataGridCellEditEndingEventArgs e)
         {
 
-            rowOleDb = (DataRowView)gridView.SelectedItem;
+            rowOleDb = (DataRowView)purchasesDataGrid.SelectedItem;
             rowOleDb.BeginEdit();
+            tbLOG.Text += rowOleDb.ToString();
         }
 
         /// <summary>
