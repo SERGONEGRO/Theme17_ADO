@@ -118,8 +118,7 @@ namespace Theme17_ADO
 
             gridView.DataContext = dtSQL.DefaultView;
 
-            /***Access***/
-
+          
         }
 
         /// <summary>
@@ -191,6 +190,7 @@ namespace Theme17_ADO
             taAcc.Fill(dsAcc.Purchases);
             CollectionViewSource purchasesViewSource = (CollectionViewSource)FindResource("purchasesViewSource");
             purchasesViewSource.View.MoveCurrentToFirst();
+            tbLOG.Text += "\nПодключение к базе .mdb успешно";
         }
 
 
@@ -220,16 +220,16 @@ namespace Theme17_ADO
         /// <param name="e"></param>
         private void MenuItemAddClickAcc(object sender, RoutedEventArgs e)
         {
-            DataRow r = dtSQL.NewRow();
-            AddClientWindow add = new AddClientWindow(r);
-            add.ShowDialog();
+            //DataRow r = dtSQL.NewRow();
+            //AddClientWindow add = new AddClientWindow(r);
+            //add.ShowDialog();
 
 
-            if (add.DialogResult.Value)
-            {
-                dtSQL.Rows.Add(r);
-                daSQL.Update(dtSQL);
-            }
+            //if (add.DialogResult.Value)
+            //{
+            //    dtSQL.Rows.Add(r);
+            //    daSQL.Update(dtSQL);
+            //}
         }
 
         /// <summary>
