@@ -24,14 +24,16 @@ namespace Theme17_ADO
 
         public AddClientWindow(DataRow row) : this()
         {
-            //cancelBtn.Click += delegate { this.DialogResult = false; };
-            //okBtn.Click += delegate
-            //{
-            //    row["WorkerName"] = txtWorkerName.Text;
-            //    row["IdBoss"] = txtIdBoss.Text;
-            //    row["idDescription"] = txtDescription.Text;
-            //    this.DialogResult = !false;
-            //};
+            cancelBtn.Click += delegate { this.DialogResult = false; };
+            okBtn.Click += delegate
+            {
+                row["Name"] = txtName.Text;
+                row["SurName"] = txtSurName.Text;
+                row["LastName"] = txtLastName.Text;
+                row["Phone"] = txtPhone.Text;
+                row["Email"] = txtEmail.Text;
+                this.DialogResult = !false;
+            };
 
         }
     }

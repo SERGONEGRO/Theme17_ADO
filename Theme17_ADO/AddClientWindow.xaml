@@ -5,8 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Theme17_ADO"
         mc:Ignorable="d"
-        Title="AddClientWindow" Height="450" Width="800">
-    <Grid>
-        
+        WindowStartupLocation="CenterScreen"
+        Title="Добавление записи о клиенте" Height="300" Width="400">
+    
+    <Window.Resources>
+
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="TextBoxStyle">
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+    </Window.Resources>
+
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="1" Text="Name" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Grid.Row="2" Text="SurName" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Grid.Row="3" Text="LastName" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Grid.Row="4" Text="Phone" Style="{StaticResource TextBlockStyle}"/>
+        <TextBlock Grid.Row="5" Text="Email" Style="{StaticResource TextBlockStyle}"/>
+
+        <TextBox Grid.Row="1" Style="{StaticResource TextBoxStyle}" x:Name="txtName"/>
+        <TextBox Grid.Row="2" Style="{StaticResource TextBoxStyle}" x:Name="txtSurName"/>
+        <TextBox Grid.Row="3" Style="{StaticResource TextBoxStyle}" x:Name="txtLastName"/>
+        <TextBox Grid.Row="4" Style="{StaticResource TextBoxStyle}" x:Name="txtPhone"/>
+        <TextBox Grid.Row="5" Style="{StaticResource TextBoxStyle}" x:Name="txtEmail"/>
+
+        <Button Content="Добавить" Grid.Column="0" Grid.Row="6" Margin="5" FontSize="20" x:Name="okBtn" />
+        <Button Content="Отмена" Grid.Column="1" Grid.Row="6" Margin="5" FontSize="20" x:Name="cancelBtn"/>
+
     </Grid>
 </Window>

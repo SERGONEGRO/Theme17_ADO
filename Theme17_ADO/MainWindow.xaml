@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Theme17_ADO"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Window.Resources>
-        <local:Theme17_AccessDataSet2 x:Key="theme17_AccessDataSet2"/>
-        <CollectionViewSource x:Key="purchasesViewSource" Source="{Binding Purchases, Source={StaticResource theme17_AccessDataSet2}}"/>
-    </Window.Resources>
+        Title="MainWindow" Height="450" Width="800">
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Выборка" Click="AllViewShow"/>
+        </ContextMenu>
+    </Window.ContextMenu>
 
-
-    <Grid DataContext="{StaticResource purchasesViewSource}">
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*"/>
             <ColumnDefinition Width="30*"/>
@@ -23,7 +23,7 @@
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="gridView"
+        <DataGrid x:Name="gvClients"
                   IsSynchronizedWithCurrentItem="True"
                   SelectionMode="Single" 
                   AutoGenerateColumns="False"
@@ -73,30 +73,26 @@
                    Height="190"  Width="218"
                    Text="{Binding}" VerticalAlignment="Top"
                    />
-        <DataGrid x:Name="purchasesDataGrid" 
+        <DataGrid x:Name="gvPurchases" 
                   IsSynchronizedWithCurrentItem="True"
                   SelectionMode="Single"
+                 
                   AutoGenerateColumns="False" 
                   EnableRowVirtualization="True" 
-                  ItemsSource="{Binding}" Margin="0,220,0,10"
+                  Margin="0,220,0,10"
                   IsReadOnly="False"
                   RowDetailsVisibilityMode="VisibleWhenSelected" 
-                  Grid.RowSpan="2"
-                  CurrentCellChanged="GVCurrentCellChangedAcc"
-                  CellEditEnding="GVCellEditEndingAcc">
+                  Grid.RowSpan="2">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="iDColumn" Binding="{Binding ID}" Header="ID"/>
                 <DataGridTextColumn x:Name="emailColumn" Binding="{Binding Email}" Header="Email"/>
                 <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID"/>
                 <DataGridTextColumn x:Name="productNameColumn" Binding="{Binding ProductName}" Header="Product Name"/>
             </DataGrid.Columns>
-            <DataGrid.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Добавить" Click="MenuItemAddClickAcc"/>
-                    <MenuItem Header="Удалить" Click="MenuItemDeleteClickAcc"/>
-                </ContextMenu>
-            </DataGrid.ContextMenu>
         </DataGrid>
-        
+        <Button Content="Новый заказ" Grid.Column="1" 
+                HorizontalAlignment="Left" Margin="32,183,0,0" 
+                Grid.Row="1" VerticalAlignment="Top" Width="178" Click="Button_Click"/>
+
     </Grid>
 </Window>

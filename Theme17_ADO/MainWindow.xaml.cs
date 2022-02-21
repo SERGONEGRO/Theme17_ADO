@@ -24,27 +24,22 @@ namespace Theme17_ADO
     /// </summary>
     public partial class MainWindow : Window
     {
+        DataSet ds = new DataSet();
         SqlConnection conSQL;
         SqlDataAdapter daSQL;
         DataTable dtSQL;
         DataRowView rowSQL;
 
-
-        //OleDbConnection conOleDb;
-        //OleDbDataAdapter daOleDb;
-        DataTable dtOleDb;
+        OleDbConnection conMDB;
+        OleDbDataAdapter daMDB;
+        DataTable dtMDB;
         DataRowView rowOleDb;
-        DataSet myDataSet;
-        Theme17_AccessDataSet2TableAdapters.PurchasesTableAdapter taAcc;
-        Theme17_AccessDataSet2 dsAcc;
-
-
-        //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Theme17_ADO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
-        //Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\User\source\repos\Theme17_ADO\Theme17_ADO\Theme17_Access.accdb
+        
+        string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
 
         public MainWindow() { InitializeComponent(); Preparing(); }
 
-        private void Preparing()
+        private async void Preparing()
         {
             /****SQL****/
             #region Init
@@ -73,7 +68,7 @@ namespace Theme17_ADO
             sql = @"INSERT INTO Clients (Name,  Surname,  Lastname, Phone, Email) 
                                  VALUES (@Name,  @Surname,  @Lastname, @Phone, @Email); 
                      SET @id = @@IDENTITY;";
-
+            
             daSQL.InsertCommand = new SqlCommand(sql, conSQL);
 
             daSQL.InsertCommand.Parameters.Add("@id", SqlDbType.Int, 4, "id").Direction = ParameterDirection.Output;
@@ -114,13 +109,33 @@ namespace Theme17_ADO
 
             #endregion
 
+            
             daSQL.Fill(dtSQL);
+            ds.Tables.Add(dtSQL);
+            gvClients.DataContext = dtSQL.DefaultView;
 
-            gridView.DataContext = dtSQL.DefaultView;
 
-          
+            /**--------------MDB-----------------**/
+            #region Init
+            var connectionSBMDB = new OleDbConnectionStringBuilder(connectionStringMDB);
+            conMDB = new OleDbConnection(connectionSBMDB.ConnectionString);
+            dtMDB = new DataTable();
+            daMDB = new OleDbDataAdapter();
+            #endregion
+
+            #region select
+
+            var sqlMDB = @"SELECT * FROM Purchases Order By Purchases.Id Desc";
+            daMDB.SelectCommand = new OleDbCommand(sqlMDB, conMDB);
+            #endregion
+
+            daMDB.Fill(dtMDB);
+            ds.Tables.Add(dtMDB);
+            gvPurchases.ItemsSource = ds.Tables[1].DefaultView;   //отображение таблицы покупок
+
         }
 
+        #region SQL
         /// <summary>
         /// Начало редактирования 
         /// </summary>
@@ -128,8 +143,7 @@ namespace Theme17_ADO
         /// <param name="e"></param>
         private void GVCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-
-            rowSQL = (DataRowView)gridView.SelectedItem;
+            rowSQL = (DataRowView)gvClients.SelectedItem;
             rowSQL.BeginEdit();
         }
 
@@ -152,7 +166,7 @@ namespace Theme17_ADO
         /// <param name="e"></param>
         private void MenuItemDeleteClick(object sender, RoutedEventArgs e)
         {
-            rowSQL = (DataRowView)gridView.SelectedItem;
+            rowSQL = (DataRowView)gvClients.SelectedItem;
             rowSQL.Row.Delete();
             daSQL.Update(dtSQL);
         }
@@ -168,99 +182,24 @@ namespace Theme17_ADO
             AddClientWindow add = new AddClientWindow(r);
             add.ShowDialog();
 
-
             if (add.DialogResult.Value)
             {
                 dtSQL.Rows.Add(r);
                 daSQL.Update(dtSQL);
             }
         }
+        #endregion
 
         private void AllViewShow(object sender, RoutedEventArgs e)
         {
             
-            //new AllView().ShowDialog();
+            new AllView(ds).ShowDialog();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dsAcc = (Theme17_AccessDataSet2)FindResource("theme17_AccessDataSet2");
-            // Загрузить данные в таблицу Purchases. Можно изменить этот код как требуется.
-            taAcc = new Theme17_AccessDataSet2TableAdapters.PurchasesTableAdapter();
-            taAcc.Fill(dsAcc.Purchases);
-            CollectionViewSource purchasesViewSource = (CollectionViewSource)FindResource("purchasesViewSource");
-            purchasesViewSource.View.MoveCurrentToFirst();
-            tbLOG.Text += "\nПодключение к базе .mdb успешно";
-        }
-
-
-        /// <summary>
-        /// Удаление записи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItemDeleteClickAcc(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                rowOleDb = (DataRowView)purchasesDataGrid.SelectedItem;
-                rowOleDb.Row.Delete();
-                taAcc.Update(dsAcc);
-            }
-            catch
-            {
-                MessageBox.Show("Update Failed");
-            }
-        }
-
-        /// <summary>
-        /// Добавление записи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItemAddClickAcc(object sender, RoutedEventArgs e)
-        {
-            //DataRow r = dtSQL.NewRow();
-            //AddClientWindow add = new AddClientWindow(r);
-            //add.ShowDialog();
-
-
-            //if (add.DialogResult.Value)
-            //{
-            //    dtSQL.Rows.Add(r);
-            //    daSQL.Update(dtSQL);
-            //}
-        }
-
-        /// <summary>
-        /// Начало редактирования 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GVCellEditEndingAcc(object sender, DataGridCellEditEndingEventArgs e)
-        {
-
-            rowOleDb = (DataRowView)gridView.SelectedItem;
-            rowOleDb.BeginEdit();
-        }
-
-        /// <summary>
-        /// Редактирование записи
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GVCurrentCellChangedAcc(object sender, EventArgs e)
-        {
-            try
-            {
-                if (rowOleDb == null) return;
-                rowOleDb.EndEdit();
-                taAcc.Update(dsAcc);
-            }
-            catch
-            {
-                MessageBox.Show("Update Failed");
-            }
+            AddPurchaseWindow AddPurchaseWnd = new AddPurchaseWindow(ds);
+            AddPurchaseWnd.Show();
         }
     }
 }

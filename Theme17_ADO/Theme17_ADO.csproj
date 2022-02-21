@@ -101,12 +101,26 @@
     <Compile Include="AddClientWindow.xaml.cs">
       <DependentUpon>AddClientWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddPurchaseWindow.xaml.cs">
+      <DependentUpon>AddPurchaseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AllView.xaml.cs">
+      <DependentUpon>AllView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Theme17_AccessDataSet2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Theme17_AccessDataSet2.xsd</DependentUpon>
     </Compile>
     <Page Include="AddClientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddPurchaseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AllView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
