@@ -24,8 +24,26 @@ namespace Theme17_ADO
         public AllView() { InitializeComponent(); }
         public AllView(DataSet ds) : this()
         {
-            DataTable dt = new DataTable();
-            dt = ds.Tables[0];
+            DataTable clients = ds.Tables[0];
+            DataTable purchases = ds.Tables[1];
+            var query =
+                from client in clients.AsEnumerable()
+                join purchase in purchases.AsEnumerable()
+                on client.Field<string>("Email") equals
+                    purchase.Field<string>("Email")
+                select new
+                {
+                    ClientID = client.Field<int>("id"),
+                    ClientName = client.Field<string>("Name"),
+                    ClientSurName = client.Field<string>("Surname"),
+                    ClientLastName = client.Field<string>("Lastname"),
+                    ClientPhone = client.Field<string>("Phone"),
+                    PurchaseId = purchase.Field<int>("ID"),
+                    ProductId = purchase.Field<string>("ProductID"),
+                    ProductName = purchase.Field<string>("ProductName")
+                };
+
+//            clients.Merge(purchases, true, MissingSchemaAction.Add);
 //            SqlDataAdapter da = new SqlDataAdapter();
 
 //            var sql = @"SELECT 
@@ -41,9 +59,10 @@ namespace Theme17_ADO
 //WHERE Clients.Email = Purchases.Email
 //Order By Clients.Id";
 //            da.SelectCommand = new SqlCommand(sql);
-//            da.Fill(dt);
+//            da.Fill(clients);
 
-            gridAllView.DataContext = dt.DefaultView;
+//            gridAllView.DataContext = clients.DefaultView;
+         
         }
     }
 }

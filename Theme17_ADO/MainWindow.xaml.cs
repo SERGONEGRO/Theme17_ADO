@@ -192,7 +192,6 @@ namespace Theme17_ADO
 
         private void AllViewShow(object sender, RoutedEventArgs e)
         {
-            
             new AllView(ds).ShowDialog();
         }
 
