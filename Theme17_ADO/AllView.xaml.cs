@@ -38,30 +38,33 @@ namespace Theme17_ADO
                     ClientSurName = client.Field<string>("Surname"),
                     ClientLastName = client.Field<string>("Lastname"),
                     ClientPhone = client.Field<string>("Phone"),
+                    ClientMail = client.Field<string>("Email"),
                     PurchaseId = purchase.Field<int>("ID"),
                     ProductId = purchase.Field<string>("ProductID"),
                     ProductName = purchase.Field<string>("ProductName")
                 };
 
-//            clients.Merge(purchases, true, MissingSchemaAction.Add);
-//            SqlDataAdapter da = new SqlDataAdapter();
+            //            clients.Merge(purchases, true, MissingSchemaAction.Add);
+            //            SqlDataAdapter da = new SqlDataAdapter();
 
-//            var sql = @"SELECT 
-//Clients.id as 'ID клиента',
-//Clients.Name as 'Имя',
-//Clients.SurName as 'Фамилия',
-//Clients.LastName as 'Отчество',
-//Clients.Phone as 'Телефон',
-//Clients.Email as 'email',
-//Purchases.ProductId as 'ID товара',
-//Purchases.ProductName as 'Название товара'
-//FROM  Clients, Purchases
-//WHERE Clients.Email = Purchases.Email
-//Order By Clients.Id";
-//            da.SelectCommand = new SqlCommand(sql);
-//            da.Fill(clients);
+            //            var sql = @"SELECT 
+            //Clients.id as 'ID клиента',
+            //Clients.Name as 'Имя',
+            //Clients.SurName as 'Фамилия',
+            //Clients.LastName as 'Отчество',
+            //Clients.Phone as 'Телефон',
+            //Clients.Email as 'email',
+            //Purchases.ProductId as 'ID товара',
+            //Purchases.ProductName as 'Название товара'
+            //FROM  Clients, Purchases
+            //WHERE Clients.Email = Purchases.Email
+            //Order By Clients.Id";
+            //            da.SelectCommand = new SqlCommand(sql);
+            //            da.Fill(clients);
 
-//            gridAllView.DataContext = clients.DefaultView;
+            //            gridAllView.DataContext = clients.DefaultView;
+            gridAllView.DataContext = query.ToList();
+
          
         }
     }

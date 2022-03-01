@@ -35,7 +35,8 @@ namespace Theme17_ADO
         DataTable dtMDB;
         DataRowView rowOleDb;
         
-        string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
+        //string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
+        string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\Negro\\Source\\Repos\\SERGONEGRO\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
 
         public MainWindow() { InitializeComponent(); Preparing(); }
 
@@ -48,6 +49,8 @@ namespace Theme17_ADO
             {
                 DataSource = @"(localdb)\MSSQLLocalDB",
                 InitialCatalog = "Theme17_ADO"
+                //InitialCatalog = "dbo"
+
             };
             conSQL = new SqlConnection(connectionStringBuilder.ConnectionString);
             dtSQL = new DataTable();
@@ -71,7 +74,7 @@ namespace Theme17_ADO
             
             daSQL.InsertCommand = new SqlCommand(sql, conSQL);
 
-            daSQL.InsertCommand.Parameters.Add("@id", SqlDbType.Int, 4, "id").Direction = ParameterDirection.Output;
+            daSQL.InsertCommand.Parameters.Add("@Id", SqlDbType.Int, 4, "id").Direction = ParameterDirection.Output;
             daSQL.InsertCommand.Parameters.Add("@Name", SqlDbType.NVarChar, 20, "Name");
             daSQL.InsertCommand.Parameters.Add("@Surname", SqlDbType.NVarChar, 20, "Surname");
             daSQL.InsertCommand.Parameters.Add("@Lastname", SqlDbType.NVarChar, 20, "Lastname");
@@ -132,7 +135,6 @@ namespace Theme17_ADO
             daMDB.Fill(dtMDB);
             ds.Tables.Add(dtMDB);
             gvPurchases.ItemsSource = ds.Tables[1].DefaultView;   //отображение таблицы покупок
-
         }
 
         #region SQL
