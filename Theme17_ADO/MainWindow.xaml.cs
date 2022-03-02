@@ -34,9 +34,9 @@ namespace Theme17_ADO
         OleDbDataAdapter daMDB;
         DataTable dtMDB;
         DataRowView rowOleDb;
-        
-        //string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
-        string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\Negro\\Source\\Repos\\SERGONEGRO\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
+
+        string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
+        //string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\Negro\\Source\\Repos\\SERGONEGRO\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
 
         public MainWindow() { InitializeComponent(); Preparing(); }
 
@@ -55,7 +55,7 @@ namespace Theme17_ADO
             conSQL = new SqlConnection(connectionStringBuilder.ConnectionString);
             dtSQL = new DataTable();
             daSQL = new SqlDataAdapter();
-            tbLOG.Text += "Соединение с базой SQL успешно";
+            //tbLOG.Text += "Соединение с базой SQL успешно";
 
             #endregion
 
