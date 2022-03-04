@@ -26,7 +26,36 @@ namespace Theme17_ADO
 
         public AddPurchaseWindow(DataSet ds) : this()
         {
+            DataTable clients = ds.Tables[0];
+            DataTable purchases = ds.Tables[1];
 
+            var query =
+                from client in clients.AsEnumerable()
+                select new
+                {
+                    Client = client.Field<string>("Name") + " " +
+                             client.Field<string>("Surname") + " " +
+                             client.Field<string>("Lastname")
+                };
+            //List clientList = clients.;
+            //cbClient.DataContext = clients;
+            //cbClient.DataContext = query.ToList();
+
+
+
+            cancelBtn.Click += delegate { this.DialogResult = false; };
+            okBtn.Click += delegate
+            {
+                //DataRow row = null;
+                //row["Email"] = cbClient.SelectedItem.ToString();
+                //row["ProductID"] = txtProductId.Text;
+                //row["ProductName"] = txtProductName.Text;
+
+                //purchases.Rows.Add(row);
+                
+                //this.DialogResult = !false;
+                MessageBox.Show(cbClient.SelectedItem.ToString());
+            };
         }
     }
 }

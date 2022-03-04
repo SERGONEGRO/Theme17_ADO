@@ -5,8 +5,66 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Theme17_ADO"
         mc:Ignorable="d"
-        Title="AddPurchaseWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="новый заказ" Height="300" Width="600"
+         WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+
+        <Style TargetType="TextBlock" x:Key="TextBlockStyle1">
+            <Setter Property="Grid.Column" Value="0" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="TextBoxStyle1">
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+        <Style TargetType="ComboBox" x:Key="ComboBoxStyle1">
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="Grid.Row" Value="2" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+
+    </Window.Resources>
+    
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="1" Text="Клиент:" Style="{StaticResource TextBlockStyle1}"/>
+        <TextBlock Grid.Row="2" Text="Id товара:" Style="{StaticResource TextBlockStyle1}"/>
+        <TextBlock Grid.Row="3" Text="Наименование товара:" Style="{StaticResource TextBlockStyle1}"/>
+
+        <ComboBox Grid.Row="1" Style="{StaticResource ComboBoxStyle1}"
+                  x:Name="cbClient"
+                  ItemsSource="{Binding}">
+            <!--<TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Новинки 2015 года" />
+            <ComboBoxItem Background="LightGray">LG Nexus 5X</ComboBoxItem>
+            <ComboBoxItem>Huawei Nexus 6P</ComboBoxItem>
+            <ComboBoxItem Background="LightGray">iPhone 6S</ComboBoxItem>
+            <ComboBoxItem>iPhone 6S Plus</ComboBoxItem>
+            <ComboBoxItem Background="LightGray">Аsus Zenphone 2</ComboBoxItem>
+            <ComboBoxItem>Microsoft Lumia 950</ComboBoxItem>-->
+        </ComboBox>
+        <TextBox Grid.Row="2" Style="{StaticResource TextBoxStyle1}" x:Name="txtProductId"/>
+        <TextBox Grid.Row="3" Style="{StaticResource TextBoxStyle1}" x:Name="txtProductName"/>
+
+        <Button Content="Добавить" Grid.Column="0" Grid.Row="6" Margin="5" FontSize="20" x:Name="okBtn" />
+        <Button Content="Отмена" Grid.Column="1" Grid.Row="6" Margin="5" FontSize="20" x:Name="cancelBtn"/>
+
     </Grid>
 </Window>

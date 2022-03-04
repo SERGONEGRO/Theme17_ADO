@@ -200,7 +200,13 @@ namespace Theme17_ADO
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             AddPurchaseWindow AddPurchaseWnd = new AddPurchaseWindow(ds);
-            AddPurchaseWnd.Show();
+            AddPurchaseWnd.ShowDialog();
+
+            if (AddPurchaseWnd.DialogResult.Value)
+            {
+                //dtSQL.Rows.Add(r);
+                //daSQL.Update(dtSQL);
+            }
         }
     }
 }
