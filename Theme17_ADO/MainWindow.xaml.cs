@@ -35,13 +35,16 @@ namespace Theme17_ADO
         DataTable dtMDB;
         DataRowView rowOleDb;
 
-        string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
-        //string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\Negro\\Source\\Repos\\SERGONEGRO\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
+        //string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\User\\source\\repos\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
+        string connectionStringMDB = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\\Users\\Negro\\Source\\Repos\\SERGONEGRO\\Theme17_ADO\\Theme17_ADO\\Theme17_Access.mdb";
 
         public MainWindow() { InitializeComponent(); Preparing(); }
 
         private async void Preparing()
         {
+
+            //DeletePurchaseTable();
+            AddNewPurchaseTable();
             /****SQL****/
             #region Init
             tbLOG.Text = "";
@@ -206,6 +209,80 @@ namespace Theme17_ADO
             {
                 //dtSQL.Rows.Add(r);
                 //daSQL.Update(dtSQL);
+            }
+        }
+
+
+        /// <summary>
+        /// Удаление таблицы
+        /// </summary>
+        //private void DeletePurchaseTable()
+        //{
+        //    var connectionStringBuilder = new SqlConnectionStringBuilder
+        //    {
+        //        DataSource = @"(localdb)\MSSQLLocalDB",
+        //        InitialCatalog = "Theme17_ADO"
+        //        //InitialCatalog = "dbo"
+
+        //    };
+        //    conSQL = new SqlConnection(connectionStringBuilder.ConnectionString);
+
+        //    string query =
+        //       @"DROP TABLE Purchases";
+        //    SqlCommand cmd = new SqlCommand(query, conSQL);
+        //    try
+        //    {
+        //        conSQL.Open();
+        //        cmd.ExecuteNonQuery();
+        //        MessageBox.Show("Table Deleted");
+        //    }
+        //    catch (SqlException e)
+        //    {
+        //        MessageBox.Show("Ошибка. Details: " + e.ToString());
+        //    }
+        //    finally
+        //    {
+        //        conSQL.Close();
+        //    }
+        //}
+
+
+        /// <summary>
+        /// Создание новой таблицы
+        /// </summary>
+        private void AddNewPurchaseTable()
+        {
+            var connectionStringBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource = @"(localdb)\MSSQLLocalDB",
+                InitialCatalog = "Theme17_ADO"
+            };
+            conSQL = new SqlConnection(connectionStringBuilder.ConnectionString);
+
+            string query =
+               @"
+DROP TABLE [dbo].[Purchases];
+CREATE TABLE [dbo].[Purchases] (
+    [ID]          INT           NOT NULL,
+    [Email]       NVARCHAR (50) NOT NULL,
+    [ProductID]   NVARCHAR (50) NOT NULL,
+    [ProductName] NVARCHAR (50) NOT NULL
+);
+";
+            SqlCommand cmd = new SqlCommand(query, conSQL);
+            try
+            {
+                conSQL.Open();
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Новая таблица создана");
+            }
+            catch (SqlException e)
+            {
+                MessageBox.Show("Ошибка. Details: \n" + e.ToString());
+            }
+            finally
+            {
+                conSQL.Close();
             }
         }
     }
